@@ -1,5 +1,5 @@
 {
-    "name": "angwa/glade-bank-transfer",
+    "name": "glade/glade-bank-transfer",
     "description": "This will enable customers make payment with bank transfer",
     "type": "library",
     "license": "MIT",
