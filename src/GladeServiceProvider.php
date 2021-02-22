@@ -23,11 +23,11 @@ class GladeServiceProvider extends ServiceProvider
     public function register()
     {
          // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/glade.php', 'glade-api');
+        $this->mergeConfigFrom(__DIR__.'/../config/glade.php', 'glade-bank-transfer');
     	/**
     	 *Register the main class to use with the facade
     	 */
-        $this->app->singleton('glade-api', function () {
+        $this->app->singleton('glade-bank-transfer', function () {
             return new GladeBankTransfer;
         });
     }
@@ -38,7 +38,7 @@ class GladeServiceProvider extends ServiceProvider
     */
     public function provides()
     {
-        return ['glade-api'];
+        return ['glade-bank-transfer'];
     }
 
 }

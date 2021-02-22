@@ -27,6 +27,6 @@ class GladeBankTransfer extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'glade-api';
+        return 'glade-bank-transfer';
     }
 }

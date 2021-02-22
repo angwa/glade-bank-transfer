@@ -1,6 +1,6 @@
-# Glade Pay - Bank Transfer in Laravel
+# Glade Pay - Bank Transfer Option in Laravel
 
-This package will enable customers make payment with bank transfer using Glade Api. This package uses [Guzzle](https://docs.guzzlephp.org/)).  Guzzle is a PHP HTTP client that makes it easy to send HTTP requests and trivial to integrate with web services.
+This package will enable customers make payment with bank transfer using Glade Api. This package uses [Guzzle](https://docs.guzzlephp.org/).  Guzzle is a PHP HTTP client that makes it easy to send HTTP requests and trivial to integrate with web services.
 
 
 ## Installation and usage
@@ -12,7 +12,52 @@ You can install the package via composer:
 ```bash
 composer require angwa/glade-bank-transfer
 ```
+Next step is to register our service providers. Simply open ```config/app.php``` and locate  providers section and add  ```GladeApi\GladeBankTransfer\GladeServiceProvider::class,``` Like below
+```
+'providers' => [
+    ...
+    GladeApi\GladeBankTransfer\GladeServiceProvider::class,
+    ...
+]
 
+```
+
+Go down still inside ```config/app.php``` and place ```'GladeBankTransfer' => GladeApi\GladeBankTransfer\Facades\GladeBankTransfer::class,``` in the ```aliases``` section like below
+
+```
+'aliases' => [
+    ...
+    'GladeBankTransfer' => GladeApi\GladeBankTransfer\Facades\GladeBankTransfer::class,
+    ...
+]
+```
+The ablove code will enable use ```use GladeBankTransfer``` in our controllers
+
+### Load Configuration file
+Our configuration file is named glade.php and will be created when you run the bash code below
+```bash
+php artisan vendor:publish --provider="GladeApi\GladeBankTransfer\GladeServiceProvider"
+
+```
+
+You can also copy the code below, create a file named glade.php in the config folder and paste
+```
+<?php
+
+return [
+    /*
+     * This package will look for a GLADE_MERCHANT_KEY in your env file
+     * This package will look for GLADE_MERCHANT_ID in your env file
+     * This package will look for GLADE_MERCHANT_URL in your env file
+     * If the above three are not found. It might throw errors when trying to use
+     */
+    'merchantKey' => getenv('GLADE_MERCHANT_KEY'),
+    'merchantId' => getenv('GLADE_MERCHANT_ID'),
+    'paymentUrl' => getenv('GLADE_MERCHANT_URL'),
+
+];
+
+```
 ## Usage
 
 ### Tutorials
@@ -76,8 +121,14 @@ class TestGladeApi extends Controller
 }
 
 ```
+#### Sample response for payment:
+```
+ {"status":202,"txnRef":"GP88405170320210221S","auth_type":"device","accountNumber":"9922554842","accountName":"GladePay Demo","bankName":"Providus Bank","accountExpires":600,"message":"Make a transfer into the following account using your bank app or internet banking platfrom to complete the transaction"}
+ ```
 
+#### Multiple Details on parameter: 
 Our ```makePayment()``` method have other parameters that  you may like to use which are not compulsary
+
 ```
 //For example
 <?php
@@ -99,9 +150,6 @@ class TestGladeApi extends Controller
 
      //return json response 
     return GladeBankTransfer::makePayment($amount,$firstname,$lastname,$email,$business_name);
-
-    return GladeBankTransfer::verifyTransaction("GP679268020210221M");
-
 
     }
 }
@@ -128,11 +176,13 @@ class TestGladeApi extends Controller
 
      //return json response    
     return GladeBankTransfer::verifyTransaction($reference);
-
-
     }
 }
 ```  
+### Sample Response for verification
+```
+{"status":200,"txnStatus":"pending","txnRef":"GP88405170320210221S","message":"PENDING","chargedAmount":0,"currency":"NGN","payment_method":"bank_transfer","fullname":" ","email":"","bank_message":"Awaiting Validation"}
+```
 
 ## Testing
 
