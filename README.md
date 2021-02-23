@@ -186,10 +186,10 @@ class TestGladeApi extends Controller
 
 ## Testing
 
-Run the tests with:
+To run the tests on package, update composer and type this:
 
 ``` bash
-composer test
+vendor/bin/phpunit
 ```
 
 ### Security
