@@ -17,8 +17,9 @@
     },
 
          "require-dev": {
-        "phpunit/phpunit": "^10.0@dev"
-    },
+            "laravel/framework": "^7.0",
+            "phpunit/phpunit": "^10.0@dev"
+             },
             "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"

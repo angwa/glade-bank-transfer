@@ -4,6 +4,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
 
+
 class GladeBankTransfer
 {
     /**
@@ -79,7 +80,7 @@ class GladeBankTransfer
 
     public function setUrl()
     {
-        $this->baseUrl = Config::get('glade.paymentUrl');
+        $this->baseUrl =  Config::get('glade.paymentUrl');
     }
 
 
